@@ -118,8 +118,8 @@
                 <div class="mt-auto pt-6">
                     <div class="border-t bg-white py-5 text-center text-sm font-normal dark:border-gray-800 dark:bg-gray-900 dark:text-white">
                          @lang('admin::app.components.layouts.powered-by.description', [
-                            'krayin' => '<a class="text-brandColor hover:underline dark:text-brandColor" href="https://krayincrm.com/">Krayin</a>',
-                            'webkul' => '<a class="text-brandColor hover:underline dark:text-brandColor" href="https://webkul.com/">Webkul</a>',
+                            'krayin' => '<a class="text-brandColor hover:underline dark:text-brandColor" href="https://agenciataruga.com/">Agência Taruga</a>',
+                            'webkul' => '<a class="text-brandColor hover:underline dark:text-brandColor" href="https://runcrm.com.br/">RunCRM</a>',
                         ]) 
                     </div>
                 </div>
