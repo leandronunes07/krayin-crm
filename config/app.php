@@ -198,6 +198,11 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
+         * [RunCRM] Multi-projetos
+         */
+        App\Providers\DatabaseConfigProvider::class,
+
+        /*
          * Webkul Service Providers...
          */
         Webkul\Activity\Providers\ActivityServiceProvider::class,
