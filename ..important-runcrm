@@ -1,0 +1,11 @@
+
+# COMANDOS PARA NUNCA RODAR!
+NÃO use config:cache se o banco mudar dinamicamente.
+
+# COMANDOS DE TERMINAL!
+
+Migrate em todos os bancos de dados: 
+- php artisan migrate:all
+
+Limpar cache de todos os bancos de dados:
+- php artisan cache:clear-all
