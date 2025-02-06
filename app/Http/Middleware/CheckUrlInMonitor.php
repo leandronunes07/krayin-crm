@@ -11,13 +11,18 @@ class CheckUrlInMonitor
 {
     public function handle(Request $request, Closure $next)
     {
+        die('PASSOU POR AQUI??????');
         // Captura a URL atual
         $currentUrl = $request->url(); // Ou use $request->fullUrl() se precisar da URL com query params
 
         // Realiza a consulta no banco mysql_monitor
-        $result = DB::connection('mysql_monitor')->table('url_list')
+        $result = DB::connection('mysql_monitor')->table('projects')
             ->where('url', $currentUrl)
             ->first();
+
+        echo($currentUrl);
+        echo($result);
+        exit();
 
         if ($result) {
             // URL válida, podemos continuar a requisição

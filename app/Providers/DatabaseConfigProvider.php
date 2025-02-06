@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\App;
 
 class DatabaseConfigProvider extends ServiceProvider
 {
@@ -16,38 +17,45 @@ class DatabaseConfigProvider extends ServiceProvider
      */
     public function register()
     {
-        // Não precisamos fazer nada aqui para esse caso
+        // Nenhuma ação necessária no registro
     }
 
     /**
-     * Inicialize qualquer coisa no início da execução.
+     * Inicializa a configuração do banco de dados com base na URL validada.
      *
      * @return void
      */
     public function boot()
     {
+
+        // Se estiver rodando no CLI (terminal), não executa a validação
+        if (App::runningInConsole()) {
+            return;
+        }
+
         // Verifica se a URL foi validada no middleware
         if (Session::get('url_validated')) {
-            // Consultar o banco de dados mysql_monitor para pegar as configurações do banco
-            $databaseConfig = DB::connection('mysql_monitor')->table('db_config_table') // Tabela que armazena as configurações do banco
-                ->where('config_key', 'db_connection')
+            // Consultar o banco mysql_monitor para obter o ID do projeto
+            $project = DB::connection('mysql_monitor')->table('projects')
+                ->where('url', request()->getHost()) // Pegando o domínio atual
                 ->first();
 
-            // Verifique se a configuração foi encontrada
-            if ($databaseConfig) {
-                // Preencher a configuração do banco de dados com os valores obtidos
-                Config::set('database.connections.mysql.host', $databaseConfig->host);
-                Config::set('database.connections.mysql.port', $databaseConfig->port);
-                Config::set('database.connections.mysql.database', $databaseConfig->database);
-                Config::set('database.connections.mysql.username', $databaseConfig->username);
-                Config::set('database.connections.mysql.password', $databaseConfig->password);
+            // Verifica se encontrou o projeto e possui ID
+            if ($project && isset($project->id)) {
+                // Formata o nome do banco conforme a regra
+                $databaseName = 'krayin_' . str_pad($project->id, 7, '0', STR_PAD_LEFT);
+
+                // Define apenas o nome do banco, mantendo usuário e senha padrão do projeto
+                Config::set('database.connections.mysql.database', $databaseName);
             } else {
-                // Se não encontrar, você pode definir valores padrões ou lançar uma exceção
-                //\Log::error('Configuração do banco de dados não encontrada.');
+                // Se não encontrar, podemos exibir uma mensagem e encerrar a execução
+                print_r('Configuração do banco de dados não encontrada.');
+                exit();
             }
         } else {
-            // URL não validada, podemos interromper a configuração ou realizar outra ação
-            //\Log::warning('URL não validada, configuração do banco de dados não será carregada.');
+            // URL não validada, impedir o carregamento
+            print_r('URL não validada, configuração do banco de dados não será carregada.');
+            exit();
         }
     }
 }
