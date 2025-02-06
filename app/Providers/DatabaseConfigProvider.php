@@ -27,6 +27,9 @@ class DatabaseConfigProvider extends ServiceProvider
      */
     public function boot()
     {
+        $middleware = new \App\Http\Middleware\CheckUrlInMonitor();
+        $middleware->handle(request(), function () { return response('OK'); });
+        //exit(); 
 
         // Se estiver rodando no CLI (terminal), não executa a validação
         if (App::runningInConsole()) {
@@ -44,17 +47,18 @@ class DatabaseConfigProvider extends ServiceProvider
             if ($project && isset($project->id)) {
                 // Formata o nome do banco conforme a regra
                 $databaseName = 'krayin_' . str_pad($project->id, 7, '0', STR_PAD_LEFT);
+                //$databaseName = 'krayin_0base';
 
                 // Define apenas o nome do banco, mantendo usuário e senha padrão do projeto
                 Config::set('database.connections.mysql.database', $databaseName);
             } else {
                 // Se não encontrar, podemos exibir uma mensagem e encerrar a execução
-                print_r('Configuração do banco de dados não encontrada.');
+                print_r('Erro: XPTO d0120391'); // Configuração do banco de dados não encontrada.
                 exit();
             }
         } else {
             // URL não validada, impedir o carregamento
-            print_r('URL não validada, configuração do banco de dados não será carregada.');
+            print_r('Erro: XPTO 3120hjd0'); // URL não validada, configuração do banco de dados não será carregada.
             exit();
         }
     }

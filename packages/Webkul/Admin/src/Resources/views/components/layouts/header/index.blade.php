@@ -215,6 +215,9 @@
                     <p class="text-gray-400">
                         @lang('admin::app.layouts.app-version', ['version' => core()->version()])
                     </p>
+                    <p class="text-gray-400">
+                        WL: {{ str_replace('krayin_', '', config('database.connections.mysql.database')) }}
+                    </p>
                 </div>
 
                 <div class="grid gap-1 pb-2.5">
