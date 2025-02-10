@@ -82,7 +82,7 @@ return [
     |
      */
 
-    'timezone' => env('APP_TIMEZONE', 'Asia/Kolkata'),
+    'timezone' => env('APP_TIMEZONE', 'America/Sao_Paulo'),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ return [
     |
      */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => env('APP_LOCALE', 'pt_BR'),
 
     /*
     |--------------------------------------------------------------------------
@@ -201,6 +201,7 @@ return [
          * [RunCRM] Multi-projetos
          */
         App\Providers\DatabaseConfigProvider::class,
+        App\Providers\ProjectServiceProvider::class,
 
         /*
          * Webkul Service Providers...
