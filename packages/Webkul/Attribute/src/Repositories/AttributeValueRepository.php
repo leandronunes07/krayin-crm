@@ -79,10 +79,12 @@ class AttributeValueRepository extends Repository
             }
 
             if ($attribute->type === 'image' || $attribute->type === 'file') {
+                $projectId = str_pad(optional($GLOBALS['dbMonitor'])->id ?? 0, 7, '0', STR_PAD_LEFT);
                 $data[$attribute->code] = $data[$attribute->code] instanceof UploadedFile
-                    ? $data[$attribute->code]->store($data['entity_type'].'/'.$data['entity_id'])
+                    ? $data[$attribute->code]->store("projects/{$projectId}/{$data['entity_type']}/{$data['entity_id']}")
                     : null;
             }
+            
 
             $attributeValue = $this->findOneWhere([
                 'entity_type'  => $data['entity_type'],

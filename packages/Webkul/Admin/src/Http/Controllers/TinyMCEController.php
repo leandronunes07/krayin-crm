@@ -38,13 +38,21 @@ class TinyMCEController extends Controller
      */
     public function storeMedia()
     {
-        if (! request()->hasFile('file')) {
+        if (!request()->hasFile('file')) {
             return [];
         }
 
+        $file = request()->file('file');
+
+        // Obtendo o ID do projeto do banco monitorado e formatando com zeros à esquerda
+        $projectId = str_pad(optional($GLOBALS['dbMonitor'])->id ?? 0, 7, '0', STR_PAD_LEFT);
+
+        // Definindo o caminho com base no ID do projeto
+        $path = $file->store("projects/{$projectId}/uploads");
+
         return [
-            'file'      => $path = request()->file('file')->store($this->storagePath),
-            'file_name' => request()->file('file')->getClientOriginalName(),
+            'file'      => $path,
+            'file_name' => $file->getClientOriginalName(),
             'file_url'  => Storage::url($path),
         ];
     }

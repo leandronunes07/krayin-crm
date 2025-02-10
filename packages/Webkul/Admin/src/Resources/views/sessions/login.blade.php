@@ -10,13 +10,13 @@
             @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
                 <img
                     class="h-10 w-[110px]"
-                    src="{{ Storage::url($logo) }}"
+                    src="{{ $dbMonitor->logo_dark ?? Storage::url($logo) }}"
                     alt="{{ config('app.name') }}"
                 />
             @else
                 <img
                     class="w-max"
-                    src="{{ vite()->asset('images/logo.svg') }}"
+                    src="{{ $dbMonitor->logo_white ?? vite()->asset('images/logo.svg') }}"
                     alt="{{ config('app.name') }}"
                 />
             @endif
