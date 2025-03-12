@@ -4,12 +4,20 @@
         <i class="icon-menu hidden cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-100 dark:hover:bg-gray-950 max-lg:block"></i>
 
         <a href="{{ route('admin.dashboard.index') }}">
-            <img
-                class="h-10"
-                src="{{ request()->cookie('dark_mode') ? ($dbMonitor->logo_dark ?? vite()->asset('images/dark-logo.svg')) : ($dbMonitor->logo_white ?? vite()->asset('images/logo.svg')) }}"
-                id="logo-image"
-                alt="{{ $project->name ?? config('app.name') }}"
-            />
+            @if ($logo = core()->getConfigData('general.general.admin_logo.logo_image'))
+                <img
+                    class="h-10"
+                    src="{{ Storage::url($logo) }}"
+                    alt="{{ config('app.name') }}"
+                />
+            @else
+                <img
+                    class="h-10"
+                    src="{{ request()->cookie('dark_mode') ? vite()->asset('images/dark-logo.svg') : vite()->asset('images/logo.svg') }}"
+                    id="logo-image"
+                    alt="{{ config('app.name') }}"
+                />
+            @endif
         </a>
     </div>
 
@@ -214,9 +222,6 @@
                     <!-- Version -->
                     <p class="text-gray-400">
                         @lang('admin::app.layouts.app-version', ['version' => core()->version()])
-                    </p>
-                    <p class="text-gray-400">
-                        WL: {{ str_replace('krayin_', '', config('database.connections.mysql.database')) }}
                     </p>
                 </div>
 
@@ -716,9 +721,9 @@
                 return {
                     isDarkMode: {{ request()->cookie('dark_mode') ?? 0 }},
 
-                    logo: "{{ ($dbMonitor->logo_white ?? vite()->asset('images/dark-logo.svg')) }}",
+                    logo: "{{ vite()->asset('images/logo.svg') }}",
 
-                    dark_logo: "{{ ($dbMonitor->logo_dark ?? vite()->asset('images/dark-white.svg')) }}",
+                    dark_logo: "{{ vite()->asset('images/dark-logo.svg') }}",
                 };
             },
 

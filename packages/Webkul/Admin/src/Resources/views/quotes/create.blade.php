@@ -183,6 +183,7 @@
                                     <v-lookup-component
                                         :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
                                         :value='@json($lookUpEntityData)'
+                                        can-add-new="true"
                                     ></v-lookup-component>
                                 </x-admin::form.control-group>
                             </div>
@@ -344,7 +345,7 @@
                 {!! view_render_event('admin.contacts.quotes.create.table.before') !!}
             </div>
 
-            <!-- Add New Qoute Item -->
+            <!-- Add New Quote Item -->
             <span
                 class="text-md cursor-pointer self-start font-semibold text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
