@@ -362,7 +362,7 @@ return [
 
         'layouts' => [
             'powered-by' => [
-                'description' => 'Developed by :krayin, a project made with 💖 by :webkul.',
+                'description' => 'Powered by :krayin, an open-source project by :webkul.',
             ],
 
             'header' => [
