@@ -80,12 +80,30 @@ class ActivityRepository extends Repository
             $activity->participants()->delete();
 
             foreach ($data['participants']['users'] ?? [] as $userId) {
+                /**
+                 * In some cases, the component exists in an HTML form, and traditional HTML does not send an empty array.
+                 * Therefore, we need to check for an empty string.
+                 * This scenario occurs only when all participants are removed.
+                 */
+                if (empty($userId)) {
+                    break;
+                }
+
                 $activity->participants()->create([
                     'user_id' => $userId,
                 ]);
             }
 
             foreach ($data['participants']['persons'] ?? [] as $personId) {
+                /**
+                 * In some cases, the component exists in an HTML form, and traditional HTML does not send an empty array.
+                 * Therefore, we need to check for an empty string.
+                 * This scenario occurs only when all participants are removed.
+                 */
+                if (empty($personId)) {
+                    break;
+                }
+
                 $activity->participants()->create([
                     'person_id' => $personId,
                 ]);
@@ -101,6 +119,8 @@ class ActivityRepository extends Repository
      */
     public function getActivities($dateRange)
     {
+        $tablePrefix = \DB::getTablePrefix();
+
         return $this->select(
             'activities.id',
             'activities.created_at',
@@ -109,7 +129,7 @@ class ActivityRepository extends Repository
             'activities.schedule_to as end',
             'users.name as user_name',
         )
-            ->addSelect(\DB::raw('IF(activities.is_done, "done", "") as class'))
+            ->addSelect(\DB::raw('IF('.$tablePrefix.'activities.is_done, "done", "") as class'))
             ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
             ->leftJoin('users', 'activities.user_id', '=', 'users.id')
             ->whereIn('type', ['call', 'meeting', 'lunch'])

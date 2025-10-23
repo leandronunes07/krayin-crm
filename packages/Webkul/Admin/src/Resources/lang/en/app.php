@@ -39,6 +39,11 @@ return [
         'delete'          => 'Delete',
         'export'          => 'Export',
         'mass-delete'     => 'Mass Delete',
+        'data-transfer'   => 'Data Transfer',
+        'imports'         => 'Imports',
+        'import'          => 'Import',
+        'event'           => 'Event',
+        'campaigns'       => 'Campaigns',
     ],
 
     'users' => [
@@ -180,42 +185,42 @@ return [
                 'empty-placeholders' => [
                     'all' => [
                         'title'       => 'No Activities Found',
-                        'description' => 'No activities found for this. You can add activities by clicking on the button on the left panel.',
+                        'description' => 'No activities found for this. You can add activities by clicking on the Activity button on the left panel.',
                     ],
 
                     'planned' => [
                         'title'       => 'No Planned Activities Found',
-                        'description' => 'No planned activities found for this. You can add planned activities by clicking on the button on the left panel.',
+                        'description' => 'No planned activities found for this. You can add planned activities by clicking on the Activity button on the left panel.',
                     ],
 
                     'notes' => [
                         'title'       => 'No Notes Found',
-                        'description' => 'No notes found for this. You can add notes by clicking on the button on the left panel.',
+                        'description' => 'No notes found for this. You can add notes by clicking on the Note button on the left panel.',
                     ],
 
                     'calls' => [
                         'title'       => 'No Calls Found',
-                        'description' => 'No notes found for this. You can add notes by clicking on the button on the left panel.',
+                        'description' => 'No calls found for this. You can add calls by clicking on the Activity button on the left panel and selecting the Call type.',
                     ],
 
                     'meetings' => [
                         'title'       => 'No Meetings Found',
-                        'description' => 'No meetings found for this. You can add meetings by clicking on the button on the left panel.',
+                        'description' => 'No meetings found for this. You can add meetings by clicking on the Activity button on the left panel and selecting the Meeting type.',
                     ],
 
                     'lunches' => [
                         'title'       => 'No Lunches Found',
-                        'description' => 'No lunches found for this. You can add lunches by clicking on the button on the left panel.',
+                        'description' => 'No lunches found for this. You can add lunches by clicking on the Activity button on the left panel and selecting the Lunch type.',
                     ],
 
                     'files' => [
                         'title'       => 'No Files Found',
-                        'description' => 'No files found for this. You can add files by clicking on the button on the left panel.',
+                        'description' => 'No files found for this. You can add files by clicking on the File button on the left panel.',
                     ],
 
                     'emails' => [
                         'title'       => 'No Emails Found',
-                        'description' => 'No emails found for this. You can add email by clicking on the button on the left panel.',
+                        'description' => 'No emails found for this. You can add emails by clicking on the Mail button on the left panel.',
                     ],
 
                     'system' => [
@@ -414,6 +419,12 @@ return [
             'warning' => 'Warning',
             'info'    => 'Info',
         ],
+
+        'tiny-mce' => [
+            'http-error'    => 'HTTP Error',
+            'invalid-json'  => 'Invalid JSON response from the server.',
+            'upload-failed' => 'File upload failed. Please try again.',
+        ],
     ],
 
     'quotes' => [
@@ -430,7 +441,6 @@ return [
                 'sales-person'   => 'Sales Person',
                 'expired-at'     => 'Expired At',
                 'created-at'     => 'Created At',
-                'expired-quotes' => 'Expired Quote',
                 'person'         => 'Person',
                 'subtotal'       => 'Subtotal',
                 'discount'       => 'Discount',
@@ -531,12 +541,15 @@ return [
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'          => 'Persons',
-                'create-btn'     => 'Create Person',
-                'create-success' => 'Person created successfully.',
-                'update-success' => 'Person updated successfully.',
-                'delete-success' => 'Person deleted successfully.',
-                'delete-failed'  => 'Person can not be deleted.',
+                'title'                    => 'Persons',
+                'create-btn'               => 'Create Person',
+                'create-success'           => 'Person created successfully.',
+                'update-success'           => 'Person updated successfully.',
+                'all-delete-success'       => 'All selected persons were deleted successfully.',
+                'partial-delete-warning'   => 'Some persons were deleted successfully. Others could not be deleted because they are linked to leads.',
+                'none-delete-warning'      => 'None of the selected persons could be deleted because they are linked to leads.',
+                'no-selection'             => 'No persons were selected for deletion.',
+                'delete-failed'            => 'Failed to delete selected persons.',
 
                 'datagrid' => [
                     'contact-numbers'   => 'Contact Numbers',
@@ -618,6 +631,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Tag created successfully.',
+                    'destroy-success' => 'Tag deleted successfully.',
+                ],
             ],
 
             'create' => [
@@ -678,6 +696,7 @@ return [
                 'in-stock'  => 'In Stock',
                 'name'      => 'Name',
                 'on-hand'   => 'On Hand',
+                'tag-name'  => 'Tag Name',
                 'price'     => 'Price',
                 'sku'       => 'SKU',
                 'view'      => 'View',
@@ -730,12 +749,13 @@ return [
 
         'groups' => [
             'index' => [
-                'create-btn'        => 'Create Group',
-                'title'             => 'Groups',
-                'create-success'    => 'Group created successfully.',
-                'update-success'    => 'Group updated successfully.',
-                'destroy-success'   => 'Group deleted successfully.',
-                'delete-failed'     => 'Group can not be deleted.',
+                'create-btn'                     => 'Create Group',
+                'title'                          => 'Groups',
+                'create-success'                 => 'Group created successfully.',
+                'update-success'                 => 'Group updated successfully.',
+                'destroy-success'                => 'Group deleted successfully.',
+                'delete-failed'                  => 'Group can not be deleted.',
+                'delete-failed-associated-users' => 'Group can not be deleted, as this is being used by users.',
 
                 'datagrid'   => [
                     'delete'      => 'Delete',
@@ -842,12 +862,13 @@ return [
 
         'sources' => [
             'index' => [
-                'create-btn'     => 'Create Source',
-                'create-success' => 'Source created successfully.',
-                'delete-failed'  => 'Source can not be deleted.',
-                'delete-success' => 'Source deleted successfully.',
-                'title'          => 'Sources',
-                'update-success' => 'Source updated successfully.',
+                'title'                          => 'Sources',
+                'create-btn'                     => 'Create Source',
+                'create-success'                 => 'Source created successfully.',
+                'delete-failed'                  => 'Source can not be deleted.',
+                'delete-success'                 => 'Source deleted successfully.',
+                'update-success'                 => 'Source updated successfully.',
+                'delete-failed-associated-leads' => 'Source cannot be deleted because it is associated with existing leads. Please detach or update those leads before deletion.',
 
                 'datagrid' => [
                     'delete' => 'Delete',
@@ -1092,6 +1113,78 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'Create Event',
+                    'title'               => 'Events',
+                    'create-success'      => 'Event created successfully.',
+                    'update-success'      => 'Event updated successfully.',
+                    'delete-success'      => 'Event deleted successfully.',
+                    'delete-failed'       => 'Event can not be deleted.',
+                    'mass-delete-success' => 'Events deleted successfully',
+
+                    'datagrid'   => [
+                        'delete'       => 'Delete',
+                        'edit'         => 'Edit',
+                        'id'           => 'ID',
+                        'name'         => 'Name',
+                        'description'  => 'Description',
+                        'date'         => 'Date',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Create Event',
+                        'name'        => 'Name',
+                        'date'        => 'Date',
+                        'description' => 'Description',
+                        'save-btn'    => 'Save Event',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Edit Event',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Create Campaigns',
+                    'title'               => 'Campaigns',
+                    'create-success'      => 'Campaign created successfully.',
+                    'update-success'      => 'Campaign updated successfully.',
+                    'delete-success'      => 'Campaign deleted successfully.',
+                    'delete-failed'       => 'Campaign can not be deleted.',
+                    'mass-delete-success' => 'Campaigns deleted successfully.',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Name',
+                        'subject'  => 'Subject',
+                        'status'   => 'Status',
+                        'active'   => 'Active',
+                        'inactive' => 'Inactive',
+                        'edit'     => 'Edit',
+                        'delete'   => 'Delete',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Create Campaign',
+                        'name'           => 'Name',
+                        'type'           => 'Type',
+                        'subject'        => 'Subject',
+                        'event'          => 'Event',
+                        'email-template' => 'Email Template',
+                        'status'         => 'Status',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Edit Campaign',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Create Tag',
@@ -1155,24 +1248,25 @@ return [
                 ],
 
                 'create' => [
-                    'confirm-password' => 'Confirm Password',
-                    'email'            => 'Email',
-                    'general'          => 'General',
-                    'global'           => 'Global',
-                    'group'            => 'Group',
-                    'individual'       => 'Individual',
-                    'name'             => 'Name',
-                    'password'         => 'Password',
-                    'permission'       => 'Permission',
-                    'role'             => 'Role',
-                    'save-btn'         => 'Save User',
-                    'status'           => 'Status',
-                    'title'            => 'Create User',
-                    'view-permission'  => 'View Permission',
+                    'confirm-password'         => 'Confirm Password',
+                    'email'                    => 'Email',
+                    'general'                  => 'General',
+                    'global'                   => 'Global',
+                    'group'                    => 'Group',
+                    'individual'               => 'Individual',
+                    'name'                     => 'Name',
+                    'password'                 => 'Password',
+                    'permission'               => 'Permission',
+                    'role'                     => 'Role',
+                    'save-btn'                 => 'Save User',
+                    'status'                   => 'Status',
+                    'title'                    => 'Create User',
+                    'view-permission'          => 'View Permission',
+                    'select-at-lest-one-group' => 'Select at least one group',
                 ],
 
                 'edit' => [
-                    'title' => 'Edit User',
+                    'title'                    => 'Edit User',
                 ],
             ],
         ],
@@ -1183,6 +1277,7 @@ return [
                 'create-btn'           => 'Create Pipeline',
                 'create-success'       => 'Pipeline created successfully.',
                 'update-success'       => 'Pipeline updated successfully.',
+                'default-required'     => 'At least one default pipeline is required.',
                 'delete-success'       => 'Pipeline deleted successfully.',
                 'delete-failed'        => 'Pipeline can not be deleted.',
                 'default-delete-error' => 'Default pipeline can not be deleted.',
@@ -1417,15 +1512,21 @@ return [
                     ],
 
                     'types'       => [
-                        'address'  => 'Address',
-                        'date'     => 'Date',
-                        'email'    => 'Email',
-                        'lookup'   => 'Lookup',
-                        'phone'    => 'Phone',
-                        'price'    => 'Price',
-                        'select'   => 'Select',
-                        'text'     => 'Text',
-                        'textarea' => 'Textarea',
+                        'text'        => 'Text',
+                        'textarea'    => 'Textarea',
+                        'price'       => 'Price',
+                        'boolean'     => 'Boolean',
+                        'select'      => 'Select',
+                        'multiselect' => 'Multiselect',
+                        'checkbox'    => 'Checkbox',
+                        'email'       => 'Email',
+                        'address'     => 'Address',
+                        'phone'       => 'Phone',
+                        'lookup'      => 'Lookup',
+                        'datetime'    => 'Datetime',
+                        'date'        => 'Date',
+                        'image'       => 'Image',
+                        'file'        => 'File',
                     ],
                 ],
             ],
@@ -1517,6 +1618,109 @@ return [
                 'type'                  => 'Type',
                 'url'                   => 'Url',
                 'validations'           => 'Validations',
+            ],
+        ],
+
+        'data-transfer' => [
+            'imports' => [
+                'create' => [
+                    'action'              => 'Action',
+                    'allowed-errors'      => 'Allowed Errors',
+                    'back-btn'            => 'Back',
+                    'create-update'       => 'Create/Update',
+                    'delete'              => 'Delete',
+                    'download-sample'     => 'Download Sample',
+                    'field-separator'     => 'Field Separator',
+                    'file'                => 'File',
+                    'general'             => 'General',
+                    'images-directory'    => 'Images Directory Path',
+                    'process-in-queue'    => 'Process In Queue',
+                    'results'             => 'Results',
+                    'save-btn'            => 'Save Import',
+                    'settings'            => 'Settings',
+                    'skip-errors'         => 'Skip Errors',
+                    'stop-on-errors'      => 'Stop on Errors',
+                    'title'               => 'Create Import',
+                    'type'                => 'Type',
+                    'validation-strategy' => 'Validation Strategy',
+                ],
+
+                'edit' => [
+                    'action'              => 'Action',
+                    'allowed-errors'      => 'Allowed Errors',
+                    'back-btn'            => 'Back',
+                    'create-update'       => 'Create/Update',
+                    'delete'              => 'Delete',
+                    'download-sample'     => 'Download Sample',
+                    'field-separator'     => 'Field Separator',
+                    'file'                => 'File',
+                    'general'             => 'General',
+                    'images-directory'    => 'Images Directory Path',
+                    'process-in-queue'    => 'Process In Queue',
+                    'results'             => 'Results',
+                    'save-btn'            => 'Save Import',
+                    'settings'            => 'Settings',
+                    'skip-errors'         => 'Skip Errors',
+                    'stop-on-errors'      => 'Stop on Errors',
+                    'title'               => 'Edit Import',
+                    'type'                => 'Type',
+                    'validation-strategy' => 'Validation Strategy',
+                ],
+
+                'index' => [
+                    'button-title' => 'Create Import',
+                    'title'        => 'Imports',
+
+                    'datagrid' => [
+                        'actions'       => 'Actions',
+                        'completed-at'  => 'Completed At',
+                        'created'       => 'Created',
+                        'delete'        => 'Delete',
+                        'deleted'       => 'Deleted',
+                        'edit'          => 'Edit',
+                        'error-file'    => 'Error File',
+                        'id'            => 'ID',
+                        'started-at'    => 'Started At',
+                        'state'         => 'State',
+                        'summary'       => 'Summary',
+                        'type'          => 'Type',
+                        'updated'       => 'Updated',
+                        'uploaded-file' => 'Uploaded File',
+                    ],
+                ],
+
+                'import' => [
+                    'back-btn'                => 'Back',
+                    'completed-batches'       => 'Total Batches Completed:',
+                    'download-error-report'   => 'Download Full Report',
+                    'edit-btn'                => 'Edit',
+                    'imported-info'           => 'Congratulations! Your import was successful.',
+                    'importing-info'          => 'Import In Process',
+                    'indexing-info'           => 'Resources Indexing (Price, Inventory and Elastic Search) In Progress',
+                    'linking-info'            => 'Resources Linking In Progress',
+                    'progress'                => 'Progress:',
+                    'title'                   => 'Import',
+                    'total-batches'           => 'Total Batches:',
+                    'total-created'           => 'Total Records Created:',
+                    'total-deleted'           => 'Total Records Deleted:',
+                    'total-errors'            => 'Total Errors:',
+                    'total-invalid-rows'      => 'Total Invalid Rows:',
+                    'total-rows-processed'    => 'Total Rows Processed:',
+                    'total-updated'           => 'Total Records Updated:',
+                    'validate'                => 'Validate',
+                    'validate-info'           => 'Click on Validate Data to check your import.',
+                    'validating-info'         => 'The data started reading and Validating',
+                    'validation-failed-info'  => 'Your import is invalid. Please fix the following errors and try again.',
+                    'validation-success-info' => 'Your import is valid. Click on Import to start the import process.',
+                ],
+
+                'create-success'    => 'Import created successfully.',
+                'delete-failed'     => 'Import deletion failed unexpectedly.',
+                'delete-success'    => 'Import deleted successfully.',
+                'not-valid'         => 'Import is invalid',
+                'nothing-to-import' => 'There are no resources to import.',
+                'setup-queue-error' => 'Please change your queue driver to "database" or "redis" to start the import process.',
+                'update-success'    => 'Import updated successfully.',
             ],
         ],
     ],
@@ -1615,6 +1819,7 @@ return [
                 'attachments'   => 'Attachments',
                 'date'          => 'Date',
                 'move-to-inbox' => 'Moved To Inbox',
+                'move-to-trash' => 'Moved To Trash',
                 'edit'          => 'Edit',
                 'view'          => 'View',
                 'delete'        => 'Delete',
@@ -1697,6 +1902,20 @@ return [
         'destroy-success'   => 'Lead deleted successfully.',
         'destroy-failed'    => 'Lead can not be deleted.',
 
+        'file' => [
+            'data-not-found'         => 'Data not found.',
+            'empty-content'          => 'PDF content is empty or could not be extracted.',
+            'failed-extract'         => 'Failed to extract text from file.',
+            'insufficient-info'      => 'Due to insufficient data, we are unable to process your request at the moment.',
+            'invalid-base64'         => 'Invalid base64 format.',
+            'invalid-format'         => 'Invalid JSON format.',
+            'invalid-response'       => 'Invalid AI response format.',
+            'missing-api-key'        => 'Missing API key or model configuration.',
+            'not-found'              => 'File not found.',
+            'recursive-call'         => 'Recursive call detected.',
+            'text-generation-failed' => 'Text extraction failed. The file might be empty or unreadable.',
+        ],
+
         'index' => [
             'title'      => 'Leads',
             'create-btn' => 'Create Lead',
@@ -1742,7 +1961,7 @@ return [
 
                 'toolbar' => [
                     'search' => [
-                        'title' => 'Search',
+                        'title' => 'Search by Title',
                     ],
 
                     'filters' => [
@@ -1760,6 +1979,15 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'All Pipelines',
                 'create-new-pipeline' => 'Create New Pipeline',
+            ],
+
+            'upload' => [
+                'create-lead'   => 'Create Lead Using AI',
+                'file'          => 'File Upload',
+                'file-info'     => 'Only pdf,bmp,jpg,jpeg,png format files are accepted.',
+                'file-required' => 'Please select at least one valid file to proceed.',
+                'save-btn'      => 'Save',
+                'upload-file'   => 'Upload File',
             ],
         ],
 
@@ -1818,7 +2046,7 @@ return [
                 'title' => 'About Lead',
             ],
 
-            'quotes'=> [
+            'quotes' => [
                 'subject'         => 'Subject',
                 'expired-at'      => 'Expired At',
                 'sub-total'       => 'Sub Total',
@@ -1939,6 +2167,54 @@ return [
                     ],
                 ],
             ],
+
+            'email' => [
+                'title' => 'Email Settings',
+                'info'  => 'Email configuration for the application.',
+
+                'imap' => [
+                    'title' => 'IMAP Settings',
+                    'info'  => 'IMAP email configuration for receiving emails.',
+
+                    'account' => [
+                        'title'         => 'IMAP Account',
+                        'title-info'    => 'Configure your IMAP account settings here.',
+                        'host'          => 'Host',
+                        'port'          => 'Port',
+                        'encryption'    => 'Encryption Type',
+                        'validate-cert' => 'Validate SSL Certificate',
+                        'username'      => 'IMAP Username',
+                        'password'      => 'IMAP Password',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Magic AI configuration for the application.',
+
+                'settings' => [
+                    'api-key'             => 'API Key',
+                    'api-key-info'        => 'Remember to use a OpenRouter API key for each model. It\'s a simple step to enhance security and performance.',
+                    'enable'              => 'Enable',
+                    'info'                => 'Enhance your Magic AI experience with your OpenRouter API Key. Integrate it now for a seamless, personalized AI adventure tailored just for you! Effortlessly customize settings and take control of your AI journey.',
+                    'other'               => 'Other Model',
+                    'other-model'         => 'For other models, use the Model ID from OpenRouter.',
+                    'doc-generation'      => 'DOC Generation',
+                    'doc-generation-info' => 'Enable the DOC Generation feature to automatically extract data from DOC files and convert them into text format. Enhance your productivity and efficiency by enabling this feature to streamline your workflow.',
+                    'title'               => 'General Settings',
+
+                    'models'     => [
+                        'deepseek-r1'           => 'Deepseek R1 Distill-llama-8b',
+                        'gemini-2-0-flash-001'  => 'Gemini 2.0 flash-001',
+                        'gpt-4o'                => 'GPT-4.0',
+                        'gpt-4o-mini'           => 'GPT-4.0 mini',
+                        'grok-2-1212'           => 'Grok 2.12',
+                        'llama-3-2-3b-instruct' => 'Llama 3.2 3b Instruct',
+                        'title'                 => 'Models',
+                    ],
+                ],
+            ],
         ],
     ],
 
@@ -2049,6 +2325,10 @@ return [
         'email-templates'      => 'Email Templates',
         'email'                => 'Email',
         'email-templates-info' => 'Add, edit or delete email templates from CRM',
+        'events'               => 'Events',
+        'events-info'          => 'Add, edit or delete events from CRM',
+        'campaigns'            => 'Campaigns',
+        'campaigns-info'       => 'Add, edit or delete campaigns from CRM',
         'workflows'            => 'Workflows',
         'workflows-info'       => 'Add, edit or delete workflows from CRM',
         'webhooks'             => 'Webhooks',
@@ -2067,6 +2347,8 @@ return [
         'warehouses'           => 'Warehouses',
         'warehouse'            => 'Warehouse',
         'warehouses-info'      => 'Add, edit or delete warehouses from CRM',
+        'data_transfer'        => 'Data Transfer',
+        'data_transfer_info'   => 'Manage persons, products and leads data transfer related settings in the CRM',
     ],
 
     'user' => [
@@ -2107,6 +2389,12 @@ return [
                     'thanks'            => 'Thanks!',
                 ],
             ],
+        ],
+    ],
+
+    'validations' => [
+        'message' => [
+            'decimal' => 'The :attribute must be a decimal.',
         ],
     ],
 

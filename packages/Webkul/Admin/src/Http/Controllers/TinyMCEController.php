@@ -2,23 +2,24 @@
 
 namespace Webkul\Admin\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Webkul\Core\Traits\Sanitizer;
 
 class TinyMCEController extends Controller
 {
+    use Sanitizer;
+
     /**
      * Storage folder path.
-     *
-     * @var string
      */
-    private $storagePath = 'tinymce';
+    private string $storagePath = 'tinymce';
 
     /**
      * Upload file from tinymce.
-     *
-     * @return void
      */
-    public function upload()
+    public function upload(): JsonResponse
     {
         $media = $this->storeMedia();
 
@@ -33,22 +34,24 @@ class TinyMCEController extends Controller
 
     /**
      * Store media.
-     *
-     * @return array
      */
-    public function storeMedia()
+    public function storeMedia(): array
     {
-        if (!request()->hasFile('file')) {
+        if (! request()->hasFile('file')) {
             return [];
         }
 
         $file = request()->file('file');
 
-        // Obtendo o ID do projeto do banco monitorado e formatando com zeros à esquerda
-        $projectId = str_pad(optional($GLOBALS['dbMonitor'])->id ?? 0, 7, '0', STR_PAD_LEFT);
+        if (! $file instanceof UploadedFile) {
+            return [];
+        }
 
-        // Definindo o caminho com base no ID do projeto
-        $path = $file->store("projects/{$projectId}/uploads");
+        $filename = md5($file->getClientOriginalName().time()).'.'.$file->getClientOriginalExtension();
+
+        $path = $file->storeAs($this->storagePath, $filename);
+
+        $this->sanitizeSVG($path, $file);
 
         return [
             'file'      => $path,

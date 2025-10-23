@@ -2,91 +2,80 @@
 
 namespace Webkul\Email\Repositories;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Webklex\PHPIMAP\Attachment as ImapAttachment;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Email\Contracts\Attachment;
+use Webkul\Email\Contracts\Email;
 
 class AttachmentRepository extends Repository
 {
     /**
-     * Parser object
-     *
-     * @var \Webkul\Email\Helpers\Parser
+     * Specify model class name.
      */
-    protected $emailParser;
-
-    /**
-     * Specify Model class name
-     *
-     * @return mixed
-     */
-    public function model()
+    public function model(): string
     {
-        return 'Webkul\Email\Contracts\Attachment';
+        return Attachment::class;
     }
 
     /**
-     * @param  \Webkul\Email\Helpers\Parser  $emailParser
-     * @return self
+     * Upload attachments.
      */
-    public function setEmailParser($emailParser)
+    public function uploadAttachments(Email $email, array $data): void
     {
-        $this->emailParser = $emailParser;
-
-        return $this;
-    }
-
-    /**
-     * Upload de anexos do e-mail, separando por projeto
-     *
-     * @param  \Webkul\Email\Contracts\Email  $email
-     * @param  array  $data
-     * @return void
-     */
-    public function uploadAttachments($email, array $data)
-    {
-        // Obtém o ID do projeto e preenche com zeros à esquerda (7 dígitos)
-        $projectId = str_pad(optional($GLOBALS['dbMonitor'])->id ?? 0, 7, '0', STR_PAD_LEFT);
-
-        if (!isset($data['source'])) {
+        if (
+            empty($data['attachments'])
+            || empty($data['source'])
+        ) {
             return;
         }
 
-        if ($data['source'] == 'email') {
-            foreach ($this->emailParser->getAttachments() as $attachment) {
-                // Define o caminho com o ID do projeto
-                $path = "emails/{$projectId}/{$email->id}/{$attachment->getFilename()}";
+        foreach ($data['attachments'] as $attachment) {
+            $attributes = $this->prepareData($email, $attachment);
 
-                // Armazena o arquivo
-                Storage::put($path, $attachment->getContent());
-
-                // Salva os metadados no banco
-                $this->create([
-                    'path'         => $path,
-                    'name'         => $attachment->getFileName(),
-                    'content_type' => $attachment->contentType,
-                    'content_id'   => $attachment->contentId,
-                    'size'         => Storage::size($path),
-                    'email_id'     => $email->id,
-                ]);
-            }
-        } else {
-            if (!isset($data['attachments'])) {
-                return;
+            if (
+                ! empty($attachment->contentId)
+                && $data['source'] === 'email'
+            ) {
+                $attributes['content_id'] = $attachment->contentId;
             }
 
-            foreach ($data['attachments'] as $index => $attachment) {
-                // Define o caminho com o ID do projeto
-                $path = request()->file("attachments.{$index}")->store("emails/{$projectId}/{$email->id}");
-
-                // Salva os metadados no banco
-                $this->create([
-                    'path'         => $path,
-                    'name'         => $attachment->getClientOriginalName(),
-                    'content_type' => $attachment->getClientMimeType(),
-                    'size'         => Storage::size($path),
-                    'email_id'     => $email->id,
-                ]);
-            }
+            $this->create($attributes);
         }
+    }
+
+    /**
+     * Get the path for the attachment.
+     */
+    private function prepareData(Email $email, UploadedFile|ImapAttachment $attachment): array
+    {
+        if ($attachment instanceof UploadedFile) {
+            $name = $attachment->getClientOriginalName();
+
+            $content = file_get_contents($attachment->getRealPath());
+
+            $mimeType = $attachment->getMimeType();
+        } else {
+            $name = $attachment->name;
+
+            $content = $attachment->content;
+
+            $mimeType = $attachment->mime;
+        }
+
+        $path = 'emails/'.$email->id.'/'.$name;
+
+        Storage::put($path, $content);
+
+        $attributes = [
+            'path'         => $path,
+            'name'         => $name,
+            'content_type' => $mimeType,
+            'size'         => Storage::size($path),
+            'email_id'     => $email->id,
+        ];
+
+        return $attributes;
     }
 }

@@ -129,8 +129,11 @@ class AttributeValueRepository extends Repository
             ->where('entity_type', $entityType)
             ->where('entity_id', '!=', $entityId);
 
+        /**
+         * If the attribute type is email or phone, check the JSON value.
+         */
         if (in_array($attribute->type, ['email', 'phone'])) {
-            $query->where($this->model::$attributeTypeFields[$attribute->type], 'like', "%{$value}%");
+            $query->whereJsonContains($this->model::$attributeTypeFields[$attribute->type], [['value' => $value]]);
         } else {
             $query->where($this->model::$attributeTypeFields[$attribute->type], $value);
         }
@@ -252,7 +255,11 @@ class AttributeValueRepository extends Repository
                 break;
 
             default:
-                $label = $value;
+                if ($value instanceof Carbon) {
+                    $label = $value->format('D M d, Y H:i A');
+                } else {
+                    $label = $value;
+                }
 
                 break;
         }
