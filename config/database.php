@@ -7,21 +7,21 @@ try {
     $monitorUser = env('DB_USERNAME', 'forge');
     $monitorPass = env('DB_PASSWORD', '');
     $monitorData = env('DB_MONITOR_DATABASE', 'forge');
-    
+
     $pdo = new PDO("mysql:host={$monitorHost};dbname={$monitorData}", "{$monitorUser}", "{$monitorPass}");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    $stmt = $pdo->prepare("SELECT * FROM projects WHERE url = :url");
+
+    $stmt = $pdo->prepare('SELECT * FROM projects WHERE url = :url');
     $stmt->bindParam(':url', request()->getHost());
     $stmt->execute();
     $project = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    //print_r("SELECT * FROM projects WHERE url = :url");
-    //print_r(request()->getHost());
-    //print_r($project['id']);
-    //echo "Conectado com sucesso!";
+
+    // print_r("SELECT * FROM projects WHERE url = :url");
+    // print_r(request()->getHost());
+    // print_r($project['id']);
+    // echo "Conectado com sucesso!";
 } catch (PDOException $e) {
-    echo("Ocorreu um erro, entre em contato com o suporte.");
+    echo 'Ocorreu um erro, entre em contato com o suporte.';
     exit();
 }
 
@@ -71,8 +71,8 @@ return [
             'url'            => env('DATABASE_URL'),
             'host'           => env('DB_HOST', '127.0.0.1'),
             'port'           => env('DB_PORT', '3306'),
-            //'database'       => env('DB_DATABASE', 'forge'),
-            'database'       => 'krayin_' . str_pad($project['id'], 7, '0', STR_PAD_LEFT),
+            // 'database'       => env('DB_DATABASE', 'forge'),
+            'database'       => 'krayin_'.str_pad($project['id'], 7, '0', STR_PAD_LEFT),
             'username'       => env('DB_USERNAME', 'forge'),
             'password'       => env('DB_PASSWORD', ''),
             'unix_socket'    => env('DB_SOCKET', ''),
@@ -167,7 +167,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix'  => env('REDIS_PREFIX', Str::slug('RunCRM' . str_pad($project['id'], 7, '0', STR_PAD_LEFT)).'_database_'),
+            'prefix'  => env('REDIS_PREFIX', Str::slug('RunCRM'.str_pad($project['id'], 7, '0', STR_PAD_LEFT)).'_database_'),
         ],
 
         'default' => [

@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\ServiceProvider;
 
 class DatabaseConfigProvider extends ServiceProvider
 {
@@ -27,9 +27,11 @@ class DatabaseConfigProvider extends ServiceProvider
      */
     public function boot()
     {
-        $middleware = new \App\Http\Middleware\CheckUrlInMonitor();
-        $middleware->handle(request(), function () { return response('OK'); });
-        //exit(); 
+        $middleware = new \App\Http\Middleware\CheckUrlInMonitor;
+        $middleware->handle(request(), function () {
+            return response('OK');
+        });
+        // exit();
 
         // Se estiver rodando no CLI (terminal), não executa a validação
         if (App::runningInConsole()) {
@@ -46,8 +48,8 @@ class DatabaseConfigProvider extends ServiceProvider
             // Verifica se encontrou o projeto e possui ID
             if ($project && isset($project->id)) {
                 // Formata o nome do banco conforme a regra
-                $databaseName = 'krayin_' . str_pad($project->id, 7, '0', STR_PAD_LEFT);
-                //$databaseName = 'krayin_0base';
+                $databaseName = 'krayin_'.str_pad($project->id, 7, '0', STR_PAD_LEFT);
+                // $databaseName = 'krayin_0base';
 
                 // Define apenas o nome do banco, mantendo usuário e senha padrão do projeto
                 Config::set('database.connections.mysql.database', $databaseName);

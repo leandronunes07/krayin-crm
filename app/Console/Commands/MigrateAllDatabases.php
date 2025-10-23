@@ -3,13 +3,14 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 class MigrateAllDatabases extends Command
 {
     protected $signature = 'migrate:all';
+
     protected $description = 'Run migrations on all databases';
 
     public function handle()
@@ -19,7 +20,7 @@ class MigrateAllDatabases extends Command
 
         foreach ($databases as $dbId) {
             // Gera o nome do banco de dados conforme a regra do seu projeto
-            $databaseName = 'krayin_' . str_pad($dbId, 7, '0', STR_PAD_LEFT);
+            $databaseName = 'krayin_'.str_pad($dbId, 7, '0', STR_PAD_LEFT);
 
             // Define a conexão temporária para o banco específico
             Config::set('database.connections.mysql.database', $databaseName);
@@ -33,6 +34,6 @@ class MigrateAllDatabases extends Command
             $this->info(Artisan::output());
         }
 
-        $this->info("Migrations concluídas para todos os bancos.");
+        $this->info('Migrations concluídas para todos os bancos.');
     }
 }

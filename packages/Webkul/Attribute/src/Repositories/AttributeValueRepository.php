@@ -84,7 +84,6 @@ class AttributeValueRepository extends Repository
                     ? $data[$attribute->code]->store("projects/{$projectId}/{$data['entity_type']}/{$data['entity_id']}")
                     : null;
             }
-            
 
             $attributeValue = $this->findOneWhere([
                 'entity_type'  => $data['entity_type'],
